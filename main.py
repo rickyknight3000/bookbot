@@ -1,17 +1,30 @@
-from stats import get_book_text
-from stats import get_num_words
-from stats import get_num_characters
+import sys
+from stats import (
+    get_book_text, 
+    get_num_characters,
+    get_num_words,
+    sort_chars
+)
 
 def main():
-    text = get_book_text("/home/ratking/workspace/github/rickyknight3000/bookbot/books/frankenstein.txt")
+    book_path = sys.argv[1]
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    text = get_book_text(book_path)
     num_words = get_num_words(text)
-    num_characters = get_num_characters(text)
+    num_chars = get_num_characters(text)
+    sorted_chars = sort_chars(num_chars)
+    
     print("============ BOOKBOT ============")
-    print("Analyzing book found at books/frankenstein.txt...")
+    print(f"Analyzing book found at {book_path}...")
     print("----------- Word Count ----------")
-    print(f"{num_words} words found in the document")
+    print(f"Found {num_words} total words")
     print("--------- Character Count -------")
-    print(num_characters)
+    for item in sorted_chars:
+        if item["char"].isalpha():
+            print(f"{item["char"]}: {item["num"]}")
+    print("============= END ===============")
     return
 
 main()

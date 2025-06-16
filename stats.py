@@ -8,11 +8,19 @@ def get_num_words(num_words):
 
 def get_num_characters(num_chars):
     num_chars = num_chars.lower()
-    char_count = {}
+    char_counts = {}
 
     for char in num_chars:
-        if char in char_count:
-            char_count[char] += 1
+        if char in char_counts:
+            char_counts[char] += 1
         else:
-            char_count[char] = 1
-    return char_count
+            char_counts[char] = 1
+    return char_counts
+
+def sort_chars(chars):
+    sorted_chars = []
+    for char, count in chars.items():
+        count_dict = {"char": char, "num":count}
+        sorted_chars.append(count_dict)
+    sorted_chars.sort(reverse=True, key=lambda d: d["num"])
+    return sorted_chars
